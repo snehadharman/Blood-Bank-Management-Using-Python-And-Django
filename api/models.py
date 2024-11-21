@@ -1,8 +1,6 @@
 from django.db import models
 
-
-class Donor(models.Model):
-    BLOOD_TYPE_CHOICES = [
+BLOOD_TYPE_CHOICES = [
         ('A+', 'A+'),
         ('A-', 'A-'),
         ('B+', 'B+'),
@@ -13,6 +11,8 @@ class Donor(models.Model):
         ('AB-', 'AB-'),
     ]
 
+
+class Donor(models.Model):
     name = models.CharField(max_length=255)
     age = models.IntegerField()
     blood_type = models.CharField(max_length=3, choices=BLOOD_TYPE_CHOICES)
@@ -24,14 +24,30 @@ class Donor(models.Model):
 
 
 class BloodInventory(models.Model):
-    blood_type = models.CharField(max_length=3, unique=True)
+    blood_type = models.CharField(max_length=3, choices=BLOOD_TYPE_CHOICES, unique=True)
     units = models.IntegerField(default=0)
 
 class BloodRequest(models.Model):
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
-    blood_type = models.CharField(max_length=3)
+    blood_type = models.CharField(max_length=3, choices=BLOOD_TYPE_CHOICES)
     units_requested = models.IntegerField()
     status = models.CharField(max_length=10, choices=[
         ('Pending', 'Pending'),
         ('Fulfilled', 'Fulfilled'),
     ], default='Pending')
+
+# class BloodRequest(models.Model):
+#     STATUS_CHOICES = [
+#         ('Pending', 'Pending'),
+#         ('Fulfilled', 'Fulfilled'),
+#         ('Rejected', 'Rejected'),
+#     ]
+
+#     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blood_requests')
+#     blood_type = models.CharField(max_length=3)
+#     units_requested = models.PositiveIntegerField()
+#     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Pending')
+#     requested_at = models.DateTimeField(auto_now_add=True)
+
+#     def __str__(self):
+#         return f"{self.user.username} requested {self.units_requested} units of {self.blood_type}"
