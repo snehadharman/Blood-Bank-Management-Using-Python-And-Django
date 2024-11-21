@@ -7,8 +7,6 @@ router.register(r'donors', DonorViewSet, basename='donor')
 router.register(r'blood-inventory', BloodInventoryViewSet, basename='blood-inventory')
 router.register(r'blood-requests', BloodRequestViewSet, basename='blood-request')
 
-
-
 urlpatterns = [
     path('', include(router.urls)),  # Include all the donor-related routes
     
