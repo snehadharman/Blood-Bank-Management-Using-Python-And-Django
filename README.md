@@ -1,4 +1,4 @@
-# Donor API
+# Blood Bank Management Using Python And Django
 
 A Django-based RESTful API for managing donor data with secure JWT authentication. This project provides endpoints for creating, retrieving, updating, and deleting donor information.
 
